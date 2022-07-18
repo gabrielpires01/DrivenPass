@@ -7,7 +7,8 @@ const createUser =async (newUser: NewUser) => {
 	await prisma.users.create({
 		data: newUser
 	})
-}
+	return
+};
 
 const findByEmail =async (email: string) => {
 	const user = await prisma.users.findUnique({
@@ -17,7 +18,7 @@ const findByEmail =async (email: string) => {
 	})
 
 	return user
-}
+};
 
 export {
 	findByEmail,
