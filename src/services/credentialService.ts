@@ -12,6 +12,7 @@ const createCredential =async (credential: credentialRepository.CrendentialsData
 	return 
 }
 
+// fix security problem
 const getSingleCredential =async (id: number) => {
 	const credential = await credentialRepository.findById(id);
 	if(!credential) errorsFunc("not-found")
@@ -35,8 +36,19 @@ const getAllUserCredentials =async (userId: number) => {
 	return decryptedCredentials
 }
 
+const deleteCredential =async (id:number, userId: number) => {
+	const credential = await credentialRepository.findById(id);
+	if(!credential) errorsFunc("not-found")
+	if(credential.userId !== userId) errorsFunc("forbidden")
+
+	await credentialRepository.deleteCredential(id)
+
+	return
+}
+
 export {
 	createCredential,
 	getSingleCredential,
-	getAllUserCredentials
+	getAllUserCredentials,
+	deleteCredential,
 }

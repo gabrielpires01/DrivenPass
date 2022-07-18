@@ -27,8 +27,18 @@ const getAllCredential =async (req:Request, res:Response) => {
 	return res.send(credentials)
 }
 
+const deleteCredential = async (req:Request, res:Response) => {
+	const {id} = req.params;
+	const user = res.locals.user;
+
+	await credentialService.deleteCredential(Number(id), user.id)
+
+	return res.sendStatus(204)
+}
+
 export {
 	createCredential,
 	getAllCredential,
-	getOneCredential
+	getOneCredential,
+	deleteCredential
 }
