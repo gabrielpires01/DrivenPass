@@ -4,6 +4,9 @@ import "express-async-errors"
 import "./config/config.js"
 import errorHandler from "./middlewares/errorHandler.js";
 import router from "./routers/index.js";
+import Cryptr from "cryptr";
+
+export const cryptr = new Cryptr(process.env.CRYPTR_KEY || "secretKey")
 
 const app = express();
 app.use(cors());
