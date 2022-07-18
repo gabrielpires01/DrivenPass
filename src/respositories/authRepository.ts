@@ -9,6 +9,17 @@ const insertSession =async (token: string, id: number) => {
 	})
 }
 
+const getSession =async (token:string) => {
+	const session = await prisma.sessions.findUnique({
+		where: {
+			token
+		}
+	})
+
+	return session
+}
+
 export {
 	insertSession,
+	getSession,
 }
