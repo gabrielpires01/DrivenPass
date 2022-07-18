@@ -11,6 +11,24 @@ const createCredential =async (req:Request, res:Response) => {
 	return res.sendStatus(201)
 }
 
+const getOneCredential =async (req:Request, res:Response) => {
+	const {id} = req.params;
+
+	const credential = await credentialService.getSingleCredential(Number(id));
+
+	return res.send(credential)
+}
+
+const getAllCredential =async (req:Request, res:Response) => {
+	const user = res.locals.user
+
+	const credentials = await credentialService.getAllUserCredentials(user.id)
+
+	return res.send(credentials)
+}
+
 export {
 	createCredential,
+	getAllCredential,
+	getOneCredential
 }

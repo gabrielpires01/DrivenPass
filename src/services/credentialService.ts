@@ -12,6 +12,31 @@ const createCredential =async (credential: credentialRepository.CrendentialsData
 	return 
 }
 
+const getSingleCredential =async (id: number) => {
+	const credential = await credentialRepository.findById(id);
+	if(!credential) errorsFunc("not-found")
+	
+	const password = cryptr.decrypt(credential.password)
+	const decryptedCredential = {...credential, password}
+
+	return decryptedCredential
+}
+
+const getAllUserCredentials =async (userId: number) => { 
+	const credentials = await credentialRepository.findAll(userId);
+	if (!credentials.length) return
+
+	const decryptedCredentials = credentials.map(item => {
+		const password = cryptr.decrypt(item.password)
+		const decryptedCredential = {...item, password}
+		return decryptedCredential
+	})
+
+	return decryptedCredentials
+}
+
 export {
-	createCredential
+	createCredential,
+	getSingleCredential,
+	getAllUserCredentials
 }

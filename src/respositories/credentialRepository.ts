@@ -21,7 +21,27 @@ const findByTitleAndId =async (title:string, id: number) => {
 	return credentials[0]
 }
 
+const findById =async(id: number) => {
+	const credential = await prisma.credential.findUnique({
+		where: {
+			id
+		}
+	})
+	return credential
+}
+
+const findAll = async(userId: number) => {
+	const credentials = await prisma.credential.findMany({
+		where:{
+			userId
+		}
+	})
+	return credentials
+}
+
 export {
 	createCredential,
-	findByTitleAndId
+	findByTitleAndId,
+	findById,
+	findAll
 }
